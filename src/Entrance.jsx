@@ -1,12 +1,15 @@
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-function Vxod() {
+function Entrance() {
+  const [isLogged, setIsLogged] = useState(false)
   const { register, handleSubmit, formState: { errors }, reset, } = useForm({
     mode: "onChange"
   })
 
   const onSubmit = (data) => {
-    console.log(data.name, data.email)
+    setIsLogged(true)
+    console.log(isLogged)
     reset()
   }
 
@@ -21,7 +24,9 @@ function Vxod() {
           placeholder="Name"
           type="text"
         />
-        {errors.name && <div style={{ color: "red" }}>{errors.name.message}</div>}
+        <div style={{ height: "30px"}}>
+        {errors.name && <div style={{ color: "red", display: "flex" }}>{errors.name.message}</div>}
+        </div>
         <br />
         <input
           {...register('email',
@@ -35,13 +40,15 @@ function Vxod() {
           placeholder="Email"
           type="text"
         />
-        {errors.email && <div style={{ color: "red", marginBottom: "10px" }}>{errors.email.message}</div>}
+        <div style={{ height: "30px"}}>
+        {errors.email && <div style={{ color: "red", marginBottom: "10px", display: "flex" }}>{errors.email.message}</div>}
+        </div>
         <div className="btn">
-          <button>Send</button>
+          <button onSubmit={onSubmit}>Send</button>
         </div>
       </form>
     </div>
   )
 }
 
-export default Vxod
+export default Entrance
