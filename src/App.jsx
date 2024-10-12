@@ -1,13 +1,22 @@
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Entrance from './Entrance.jsx';
+import MainPage from './MainPage.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App() {
   return (
-    <>      
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Entrance />} />
+        <Route path="/main" element={
+          <ProtectedRoute>
+            <MainPage />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
