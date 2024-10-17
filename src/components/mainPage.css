@@ -1,0 +1,13 @@
+#root{
+  top: 0;
+}
+
+.Main_Block {
+  width: 100%;
+  height: 100%;
+}
+
+.Main_Block .Map_Block{
+  width: 800px;
+  height: 500px;
+}

@@ -1,18 +1,24 @@
-import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { UserService } from './services/userService';
 
 function Entrance() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: "onChange"
   });
 
-  const onSubmit = (data) => {
-    sessionStorage.setItem("isLoggedIn", "true");
-    sessionStorage.setItem("name", data.name);
-    navigate('/main');
+
+  const onSubmit = async (data) => {
+    const users = await UserService.getAll(data);
+    const user = users.find(user => user.Name === data.name && user.Password.toString() === data.password);
+    if (user) {
+      sessionStorage.isLoggedIn = "true"
+      navigate("/main")
+    }
+    else {
+      console.log("NOOOOO")
+    }
   };
 
   return (
@@ -30,18 +36,15 @@ function Entrance() {
         </div>
         <br />
         <input
-          {...register('email', {
-            required: "Email is empty",
-            pattern: {
-              value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-              message: "Please enter valid Email!"
-            }
+          {...register('password', {
+            required: "Password is empty",
           })}
-          placeholder="Email"
-          type="text"
+          placeholder="Password"
+          type="password"
+          autoComplete='none'
         />
         <div style={{ height: "30px"}}>
-          {errors.email && <div style={{ color: "red", marginBottom: "10px", display: "flex" }}>{errors.email.message}</div>}
+          {errors.password && <div style={{ color: "red", marginBottom: "10px", display: "flex" }}>{errors.password.message}</div>}
         </div>
         <div className="btn">
           <button type="submit">Send</button>

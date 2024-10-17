@@ -1,21 +1,23 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Entrance from './Entrance.jsx';
-import MainPage from './MainPage.jsx';
+import MainPage from './components/MainPage.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
+import { UserProvider } from './context/UserContext.jsx';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Entrance />} />
-        <Route path="/main" element={
-          <ProtectedRoute>
-            <MainPage />
-          </ProtectedRoute>
-        } />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Entrance />} />
+          <Route path="/main" element={
+            <ProtectedRoute>
+              <MainPage />
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
