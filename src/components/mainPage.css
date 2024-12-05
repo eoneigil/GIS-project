@@ -1,4 +1,4 @@
-#root{
+#root {
   top: 0;
 }
 
@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.Main_Block .Map_Block{
-  width: 800px;
-  height: 500px;
+.Main_Block .Map_Block {
+  width: 90%;
+  height: 550px;
 }

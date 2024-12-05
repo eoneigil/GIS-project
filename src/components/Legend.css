@@ -1,0 +1,28 @@
+.legend {
+  position: absolute;
+  top: 90px;
+  background-color: #222;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  z-index: 100;
+}
+
+.legend h3 {
+  margin: 0;
+  padding-bottom: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
