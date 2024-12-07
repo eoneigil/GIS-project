@@ -10,13 +10,22 @@ import Overlay from 'ol/Overlay';
 import ImageSlider from './Slider';
 import Legend from './Legend';
 import './Layer.css';
+import './PointList.css'
 import { Style, Icon } from 'ol/style';
+import PointList from './PointList';
 
 export default function Layer() {
   const map = useContext(MapContext);
   const [layer, setLayer] = useState();
   const [popupContent, setPopupContent] = useState(null);
   const [overlay, setOverlay] = useState(null);
+  const [points, setPoints] = useState([])
+
+  const [filters, setFilters] = useState({
+    quest: true,
+    karaoke: true,
+    other: true
+  })
 
   const getCategoryIcon = (category) => {
     switch (category) {
@@ -29,12 +38,14 @@ export default function Layer() {
     }
   };
 
-  useEffect(() => {
-    const fetchPoints = async () => {
-      try {
-        const data = await MapService.getAll();
-        if (layer && data.length > 0) {
-          const features = data.map(point => {
+  const fetchPoints = async () => {
+    try {
+      const data = await MapService.getAll();
+      if (layer && data.length > 0) {
+        setPoints(data);
+        const features = data
+          .filter(point => filters[point.category])
+          .map(point => {
             const [lon, lat] = point.coordinates;
             const feature = new Feature({
               geometry: new Point(fromLonLat([lon, lat])),
@@ -57,16 +68,18 @@ export default function Layer() {
             feature.setStyle(style);
             return feature;
           });
-          const vectorSource = layer.getSource();
-          vectorSource.clear();
-          vectorSource.addFeatures(features);
-        }
-      } catch (error) {
-        console.error('Ошибка при загрузке точек:', error);
+        const vectorSource = layer.getSource();
+        vectorSource.clear();
+        vectorSource.addFeatures(features);
       }
-    };
+    } catch (error) {
+      console.error('Ошибка при загрузке точек:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchPoints();
-  }, [layer]);
+  }, [filters, layer])
 
   useEffect(() => {
     if (!map) return;
@@ -115,6 +128,13 @@ export default function Layer() {
 
   }, [map]);
 
+  const HandleFilterChange = (category) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [category]: !prevFilters[category],
+    }));
+  };
+
   return (
     <>
       <div id='popup' className='op-popup'>
@@ -136,7 +156,8 @@ export default function Layer() {
         )}
       </div>
 
-      <Legend></Legend>
+      <Legend filters={filters} onFilterChange={HandleFilterChange}></Legend>
+      <PointList points={points}></PointList>
     </>
 
   );

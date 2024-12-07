@@ -3,11 +3,13 @@
 }
 
 .Main_Block {
+  display: flex;
   width: 100%;
   height: 100%;
 }
 
 .Main_Block .Map_Block {
-  width: 90%;
-  height: 550px;
+  display: flex;
+  width: 80%;
+  height: 660px;
 }

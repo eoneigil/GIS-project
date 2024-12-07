@@ -22,6 +22,8 @@ body {
   justify-content: center;
   position: relative;
   top: 200px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Main_Entrance form button {
@@ -47,24 +49,34 @@ body {
 }
 
 .Main_Entrance {
-  width: 25%;
+  margin-top: 16%;
+  width: 30%;
   min-height: 240px;
   background-color: white;
   display: flex;
   justify-content: center;
   border-radius: 10px;
   align-items: center;
+  min-width: 180px;
 }
 
 .Main_Entrance form {
-  height: 200px;
   margin-top: 15px;
+  width: 90%;
+  min-width: 170px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .Main_Entrance form input {
   color: black;
   background-color: white;
   padding: 5px;
+  width: 80%;
 }
 
 .Main_Entrance .btn {

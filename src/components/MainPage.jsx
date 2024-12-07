@@ -38,7 +38,6 @@ function MainPage() {
   return (
     <MapContext.Provider value={map}>
       <div className='Main_Block'>
-        <h1>Welcome!</h1>
         <div className='Map_Block' id="map"></div>
         <Layer></Layer>
       </div>
